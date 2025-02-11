@@ -1,0 +1,11 @@
+const express = require('express')
+const orderController = require('../controllers/orderController')
+const authMiddleware = require('../middlewares/authMiddleware')
+const validationMiddleware = require('../middlewares/validationMiddleware')
+const { createOrderSchema } = require('../Validations/orderValidation')
+const validObjectIdMiddleware = require('../middlewares/validObjectIdMiddleware')
+const router = express.Router()
+router.get('/orders', authMiddleware, orderController.getOrders)
+router.post('/orders', validationMiddleware(createOrderSchema), orderController.createOrder)
+router.get('/orders/:id', authMiddleware, validObjectIdMiddleware, orderController.getOrder)
+module.exports = router

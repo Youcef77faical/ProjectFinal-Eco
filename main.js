@@ -10,7 +10,12 @@ app.use(cors())
 app.use(express.json())
 app.use('/public', express.static('public'))
 
+app.use(require('./routes/productRoutes'))
+app.use(require('./routes/authRoutes'))
+app.use(require('./routes/orderRoutes'))
 
+app.use(require('./middlewares/notFoundMiddleware'))
+app.use(require('./middlewares/errorMiddleware'))
 
 mongoose.connect(process.env.DB_URI)
     .then(() => {
